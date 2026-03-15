@@ -55,7 +55,7 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
     } catch (error) {
       setUploadStatus('error');
       setErrorMessage(error.message);
-      console.error('图片处理失败:', error);
+      console.error('Image processing failed:', error);
     }
   };
 
@@ -173,9 +173,9 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-sm text-gray-600 mb-1">上传图片进行识别</p>
+            <p className="text-sm text-gray-600 mb-1">Upload an image to convert</p>
             <p className="text-xs text-gray-400">
-              支持 JPG、PNG、WebP、GIF 格式，最大 5MB
+              JPG, PNG, WebP, GIF — up to 5MB
             </p>
           </div>
 
@@ -196,12 +196,12 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
             {uploadStatus === 'uploading' ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>处理中...</span>
+                <span>Processing...</span>
               </>
             ) : isGenerating ? (
               <>
                 <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>生成中...</span>
+                <span>Generating...</span>
               </>
             ) : (
               <>
@@ -213,13 +213,13 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
                     d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
                   />
                 </svg>
-                <span>选择图片</span>
+                <span>Choose Image</span>
               </>
             )}
           </button>
 
           {isDragging && (
-            <p className="mt-3 text-sm text-blue-600">松开鼠标上传图片</p>
+            <p className="mt-3 text-sm text-blue-600">Drop to upload</p>
           )}
         </div>
       ) : (
@@ -229,7 +229,7 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
             {imagePreview && (
               <img
                 src={imagePreview}
-                alt="预览"
+                alt="Preview"
                 className="w-full object-contain"
               />
             )}
@@ -239,7 +239,7 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
               onClick={handleClearImage}
               disabled={isGenerating || uploadStatus === 'uploading'}
               className="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
-              title="删除图片"
+              title="Remove image"
             >
               <svg className="w-4 h-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -291,11 +291,11 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
               </svg>
-              <span>开始生成</span>
+              <span>Generate</span>
             </button>
           )}
 
-          {/* 生成中状态 */}
+          {/* Generating state */}
           {isGenerating && uploadStatus === 'success' && (
             <div className="mt-2 flex items-center justify-center text-sm text-blue-600">
               <div className="flex space-x-1 mr-2">
@@ -303,7 +303,7 @@ export default function ImageUpload({ onImageSelect, isGenerating, chartType, on
                 <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
                 <div className="w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
               </div>
-              <span>正在识别...</span>
+              <span>Analyzing...</span>
             </div>
           )}
         </div>
