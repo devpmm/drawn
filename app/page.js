@@ -28,6 +28,37 @@ export default function Home() {
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
+  // Scroll to top when any Excalidraw modal opens
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.addedNodes.length > 0) {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          break;
+        }
+      }
+    });
+
+    const watch = () => {
+      const container = document.querySelector('.excalidraw-modal-container');
+      if (container) {
+        observer.observe(container, { childList: true });
+        return true;
+      }
+      return false;
+    };
+
+    if (!watch()) {
+      const domObserver = new MutationObserver(() => {
+        if (watch()) domObserver.disconnect();
+      });
+      domObserver.observe(document.body, { childList: true, subtree: true });
+      return () => { observer.disconnect(); domObserver.disconnect(); };
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   // Sync inputs panel width to Excalidraw toolbar width once it renders
   useEffect(() => {
     const measure = () => {
@@ -398,7 +429,7 @@ export default function Home() {
         )}
 
         {/* Excalidraw canvas */}
-        <div style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', border: '0.5px solid #e0ddd8', borderRadius: '10px', overflow: 'hidden', position: 'relative' }}>
+        <div style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', border: '0.5px solid #e0ddd8', borderRadius: '10px', overflow: 'visible', position: 'relative' }}>
           <ExcalidrawCanvas elements={elements} />
         </div>
 
