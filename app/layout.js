@@ -1,28 +1,22 @@
-import { Geist, Geist_Mono } from "next/font/google";
+import { Rubik } from "next/font/google";
 import "./globals.css";
 import { Analytics } from '@vercel/analytics/next';
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const rubik = Rubik({
+  variable: "--font-rubik",
   subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
+  weight: ["400", "500"],
 });
 
 export const metadata = {
-  title: "Smart Excalidraw",
-  description: "AI-powered diagram generation",
+  title: "Drawn",
+  description: "Turn anything into editable Excalidraw diagrams",
 };
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${rubik.variable} antialiased`}>
         {children}
         <Analytics />
       </body>
