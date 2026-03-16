@@ -14,6 +14,7 @@ export default function Home() {
   const [textInput, setTextInput] = useState('');
   const [fileContent, setFileContent] = useState('');
   const [fileName, setFileName] = useState('');
+  const [filePrompt, setFilePrompt] = useState('');
   const [imageData, setImageData] = useState(null);
   const [imageName, setImageName] = useState('');
   const [imageCaption, setImageCaption] = useState('');
@@ -137,7 +138,9 @@ export default function Home() {
   const handleGenerate = async () => {
     let userInput;
     if (activeTab === 'text') userInput = textInput.trim();
-    else if (activeTab === 'file') userInput = fileContent;
+    else if (activeTab === 'file') userInput = filePrompt.trim()
+      ? `${fileContent}\n\nInstruction: ${filePrompt.trim()}`
+      : fileContent;
     else if (activeTab === 'image') userInput = { text: imageCaption || 'Generate a diagram from this image', image: imageData };
 
     if (!userInput) return;
@@ -236,7 +239,7 @@ export default function Home() {
 
       {/* Nav */}
       <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: '#fff', borderBottom: '0.5px solid #e0ddd8' }}>
-        <div style={{ fontSize: '18px', fontWeight: 500, letterSpacing: '-0.5px', color: '#1a1a1a' }}>
+        <div style={{ fontSize: '24px', fontWeight: 500, letterSpacing: '-0.5px', color: '#1a1a1a' }}>
           Drawn
         </div>
         <a
@@ -245,7 +248,7 @@ export default function Home() {
           rel="noopener noreferrer"
           style={{ display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none' }}
         >
-          <span style={{ fontSize: '14px', color: '#888' }}>Hosted on</span>
+          <span style={{ fontSize: '14px', color: '#888' }}>Deployed on</span>
           <img
             src="https://bunny.net/static/bunnynet-dark-d6a41260b1e4b665cb2dc413e3eb84ca.svg"
             alt="Bunny.net"
@@ -257,7 +260,7 @@ export default function Home() {
       {/* Hero */}
       <div style={{ padding: '72px 32px 28px', textAlign: 'center' }}>
         <h1 style={{ fontSize: '54px', fontWeight: 500, lineHeight: 1.1, letterSpacing: '-2px', margin: '0 0 14px', fontFamily: "var(--font-rubik), sans-serif" }}>
-          Turn <span style={{ color: '#FF7754' }}>anything</span> into editable<br />Excalidraw diagrams
+          Turn <span style={{ color: '#FFA033' }}>anything</span> into editable<br />Excalidraw diagrams
         </h1>
         <p style={{ fontSize: '16px', color: '#666', margin: 0 }}>
           Describe it, upload a file, or drop an image — get a diagram you can edit.
@@ -284,7 +287,7 @@ export default function Home() {
                   cursor: 'pointer',
                   background: 'none',
                   border: 'none',
-                  borderBottom: activeTab === tab ? '2px solid #FF7754' : '2px solid transparent',
+                  borderBottom: activeTab === tab ? '2px solid #FFA033' : '2px solid transparent',
                   marginBottom: '-0.5px',
                   whiteSpace: 'nowrap',
                 }}
@@ -319,6 +322,12 @@ export default function Home() {
                   onChange={handleFileUpload}
                   style={{ display: 'none' }}
                 />
+                <textarea
+                  value={filePrompt}
+                  onChange={e => setFilePrompt(e.target.value)}
+                  placeholder="Optional: describe what diagram to generate from this file..."
+                  style={textareaStyle}
+                />
               </>
             )}
 
@@ -329,19 +338,17 @@ export default function Home() {
                     Click to upload an image (.png, .jpg, .gif, .webp...)
                   </div>
                 ) : (
-                  <>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 10px', border: '0.5px solid #e0ddd8', borderRadius: '6px', background: '#fafafa', fontSize: '12px', color: '#1a1a1a' }}>
-                      <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>🖼 {imageName}</span>
-                      <button onClick={() => { setImageData(null); setImageName(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#aaa', fontSize: '15px', lineHeight: 1, padding: 0, flexShrink: 0 }}>×</button>
-                    </div>
-                    <textarea
-                      value={imageCaption}
-                      onChange={e => setImageCaption(e.target.value)}
-                      placeholder="Optional: describe what diagram to generate..."
-                      style={textareaStyle}
-                    />
-                  </>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 10px', border: '0.5px solid #e0ddd8', borderRadius: '6px', background: '#fafafa', fontSize: '12px', color: '#1a1a1a' }}>
+                    <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>🖼 {imageName}</span>
+                    <button onClick={() => { setImageData(null); setImageName(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#aaa', fontSize: '15px', lineHeight: 1, padding: 0, flexShrink: 0 }}>×</button>
+                  </div>
                 )}
+                <textarea
+                  value={imageCaption}
+                  onChange={e => setImageCaption(e.target.value)}
+                  placeholder="Optional: describe what diagram to generate from this image..."
+                  style={textareaStyle}
+                />
                 <input ref={imageInputRef} type="file" accept="image/*" onChange={handleImageUpload} style={{ display: 'none' }} />
               </>
             )}
@@ -365,7 +372,7 @@ export default function Home() {
                 disabled={!canGenerate}
                 style={{
                   padding: '7px 14px',
-                  background: canGenerate ? '#FF7754' : '#e0ddd8',
+                  background: canGenerate ? '#FFA033' : '#e0ddd8',
                   color: canGenerate ? '#fff' : '#aaa',
                   border: 'none',
                   borderRadius: '6px',
@@ -399,17 +406,23 @@ export default function Home() {
 
       {/* Footer */}
       <footer style={{ padding: '12px 32px', borderTop: '0.5px solid #e0ddd8', background: '#fff', textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
+        Made with 🧡 by{' '}
+        <a href="https://www.linkedin.com/in/marek-nalikowski/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
+          Marek Nalikowski
+        </a>
+        {' · Based on '}
         <a
           href="https://github.com/liujuntao123/smart-excalidraw-next"
           target="_blank"
           rel="noopener noreferrer"
-          style={{ color: '#aaa', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '5px' }}
+          style={{ color: '#aaa', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: '4px', verticalAlign: 'middle' }}
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'block', flexShrink: 0 }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'block', flexShrink: 0 }}>
             <path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
           </svg>
-          Based on smart-excalidraw-next by liujuntao123
+          smart-excalidraw-next
         </a>
+        {' by liujuntao123'}
       </footer>
 
     </div>
