@@ -6,7 +6,22 @@ import { CHART_TYPES } from '@/lib/constants';
 import { optimizeExcalidrawCode } from '@/lib/optimizeArrows';
 import { repairJsonClosure } from '@/lib/json-repair';
 
-const ExcalidrawCanvas = dynamic(() => import('@/components/ExcalidrawCanvas'), { ssr: false });
+const ExcalidrawCanvas = dynamic(() => import('@/components/ExcalidrawCanvas'), {
+  ssr: false,
+  loading: () => (
+    <div style={{
+      width: '100%',
+      height: '100%',
+      backgroundColor: '#fafafa',
+      backgroundImage: 'radial-gradient(circle, #d0cdc8 1px, transparent 1px)',
+      backgroundSize: '24px 24px',
+    }} />
+  ),
+});
+
+const BRAND_COLOR = '#FFA033';
+const BORDER_COLOR = '#e0ddd8';
+const ACCESS_PASSWORD = process.env.NEXT_PUBLIC_ACCESS_PASSWORD;
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('text');
@@ -19,7 +34,7 @@ export default function Home() {
   const [imageName, setImageName] = useState('');
   const [imageCaption, setImageCaption] = useState('');
 
-  const [panelWidth, setPanelWidth] = useState(null);
+  const [panelWidth, setPanelWidth] = useState(550);
 
   const [elements, setElements] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
@@ -27,6 +42,7 @@ export default function Home() {
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
+  const panelRef = useRef(null);
 
   // Scroll to top when any Excalidraw modal opens
   useEffect(() => {
@@ -62,6 +78,7 @@ export default function Home() {
   // Sync inputs panel width to Excalidraw toolbar width once it renders
   useEffect(() => {
     const measure = () => {
+      // NOTE: '.App-toolbar' is an undocumented Excalidraw internal class — may change in future Excalidraw versions
       const toolbar = document.querySelector('.App-toolbar');
       if (toolbar) {
         const w = toolbar.getBoundingClientRect().width;
@@ -181,8 +198,7 @@ export default function Home() {
 
     try {
       const headers = { 'Content-Type': 'application/json' };
-      const accessPassword = process.env.NEXT_PUBLIC_ACCESS_PASSWORD;
-      if (accessPassword) headers['x-access-password'] = accessPassword;
+      if (ACCESS_PASSWORD) headers['x-access-password'] = ACCESS_PASSWORD;
 
       const response = await fetch('/api/generate', {
         method: 'POST',
@@ -239,7 +255,7 @@ export default function Home() {
     height: '72px',
     fontSize: '12px',
     padding: '8px 10px',
-    border: '0.5px solid #e0ddd8',
+    border: `0.5px solid ${BORDER_COLOR}`,
     borderRadius: '6px',
     resize: 'none',
     background: '#fafafa',
@@ -252,7 +268,7 @@ export default function Home() {
   const dropZoneStyle = {
     width: '100%',
     height: '72px',
-    border: '0.5px dashed #e0ddd8',
+    border: `0.5px dashed ${BORDER_COLOR}`,
     borderRadius: '6px',
     background: '#fafafa',
     cursor: 'pointer',
@@ -263,38 +279,41 @@ export default function Home() {
     color: '#888',
   };
 
-  const inputWidth = panelWidth ? `${panelWidth}px` : '360px';
+  const inputWidth = `${panelWidth}px`;
 
   return (
     <div style={{ background: '#f9f7f4', minHeight: '100vh', fontFamily: "var(--font-rubik), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: '#1a1a1a', display: 'flex', flexDirection: 'column' }}>
 
       {/* Nav */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: '#fff', borderBottom: '0.5px solid #e0ddd8' }}>
-        <div style={{ fontSize: '24px', fontWeight: 500, letterSpacing: '-0.5px', color: '#1a1a1a' }}>
-          Drawn
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: '#fff', borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <img src="/drawn-logo.svg" width="28" height="28" alt="" />
+          <span style={{ fontSize: '24px', fontWeight: 500, letterSpacing: '-0.5px', color: '#1a1a1a' }}>Drawn</span>
         </div>
         <a
           href="https://bunny.net/?ref=drawn"
           target="_blank"
           rel="noopener noreferrer"
+          className="nav-bunny-badge"
           style={{ display: 'flex', alignItems: 'center', gap: '6px', textDecoration: 'none' }}
         >
-          <span style={{ fontSize: '14px', color: '#888' }}>Deployed on</span>
+          <span className="nav-bunny-text" style={{ fontSize: '14px', color: '#888' }}>Deployed on</span>
           <img
             src="https://bunny.net/static/bunnynet-dark-d6a41260b1e4b665cb2dc413e3eb84ca.svg"
             alt="Bunny.net"
+            className="nav-bunny-logo"
             style={{ height: '28px', display: 'block' }}
           />
         </a>
       </nav>
 
       {/* Hero */}
-      <div style={{ padding: '72px 32px 28px', textAlign: 'center' }}>
-        <h1 style={{ fontSize: '54px', fontWeight: 500, lineHeight: 1.1, letterSpacing: '-2px', margin: '0 0 14px', fontFamily: "var(--font-rubik), sans-serif" }}>
-          Turn <span style={{ color: '#FFA033' }}>anything</span> into editable<br />Excalidraw diagrams
+      <div className="hero-section" style={{ padding: '72px 32px 28px', textAlign: 'center' }}>
+        <h1 className="hero-headline" style={{ fontSize: '54px', fontWeight: 500, lineHeight: 1.1, letterSpacing: '-2px', margin: '0 auto 14px', maxWidth: '700px', fontFamily: "var(--font-rubik), sans-serif" }}>
+          Turn <span style={{ color: BRAND_COLOR }}>anything</span> into editable Excalidraw diagrams
         </h1>
         <p style={{ fontSize: '16px', color: '#666', margin: 0 }}>
-          Describe it, upload a file, or drop an image — get a diagram you can edit.
+          Drop in writing, code, or images — get a diagram you can edit.
         </p>
       </div>
 
@@ -302,10 +321,14 @@ export default function Home() {
       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '14px', padding: '0 24px', flex: 1 }}>
 
         {/* Inputs panel */}
-        <div style={{ width: inputWidth, maxWidth: '100%', background: '#fff', border: '0.5px solid #e0ddd8', borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
+        <div
+          ref={panelRef}
+          onFocusCapture={() => panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+          style={{ width: inputWidth, maxWidth: '100%', background: '#fff', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}
+        >
 
           {/* Tabs */}
-          <div style={{ display: 'flex', padding: '0 10px', borderBottom: '0.5px solid #e0ddd8' }}>
+          <div style={{ display: 'flex', padding: '0 10px', borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
             {['text', 'file', 'image'].map(tab => (
               <button
                 key={tab}
@@ -318,7 +341,7 @@ export default function Home() {
                   cursor: 'pointer',
                   background: 'none',
                   border: 'none',
-                  borderBottom: activeTab === tab ? '2px solid #FFA033' : '2px solid transparent',
+                  borderBottom: activeTab === tab ? `2px solid ${BRAND_COLOR}` : '2px solid transparent',
                   marginBottom: '-0.5px',
                   whiteSpace: 'nowrap',
                 }}
@@ -369,7 +392,7 @@ export default function Home() {
                     Click to upload an image (.png, .jpg, .gif, .webp...)
                   </div>
                 ) : (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 10px', border: '0.5px solid #e0ddd8', borderRadius: '6px', background: '#fafafa', fontSize: '12px', color: '#1a1a1a' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 10px', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '6px', background: '#fafafa', fontSize: '12px', color: '#1a1a1a' }}>
                     <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>🖼 {imageName}</span>
                     <button onClick={() => { setImageData(null); setImageName(''); }} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#aaa', fontSize: '15px', lineHeight: 1, padding: 0, flexShrink: 0 }}>×</button>
                   </div>
@@ -391,7 +414,7 @@ export default function Home() {
                 <select
                   value={chartType}
                   onChange={e => setChartType(e.target.value)}
-                  style={{ fontSize: '12px', padding: '4px 6px', border: '0.5px solid #e0ddd8', borderRadius: '5px', background: '#f9f7f4', color: '#1a1a1a', width: '110px' }}
+                  style={{ fontSize: '12px', padding: '4px 6px', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '5px', background: '#f9f7f4', color: '#1a1a1a', width: '110px' }}
                 >
                   {Object.entries(CHART_TYPES).map(([key, label]) => (
                     <option key={key} value={key}>{label}</option>
@@ -403,7 +426,7 @@ export default function Home() {
                 disabled={!canGenerate}
                 style={{
                   padding: '7px 14px',
-                  background: canGenerate ? '#FFA033' : '#e0ddd8',
+                  background: canGenerate ? BRAND_COLOR : BORDER_COLOR,
                   color: canGenerate ? '#fff' : '#aaa',
                   border: 'none',
                   borderRadius: '6px',
@@ -429,15 +452,15 @@ export default function Home() {
         )}
 
         {/* Excalidraw canvas */}
-        <div style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', border: '0.5px solid #e0ddd8', borderRadius: '10px', overflow: 'visible', position: 'relative' }}>
+        <div style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', overflow: 'visible', position: 'relative' }}>
           <ExcalidrawCanvas elements={elements} />
         </div>
 
       </div>
 
       {/* Footer */}
-      <footer style={{ padding: '12px 32px', borderTop: '0.5px solid #e0ddd8', background: '#fff', textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
-        Made with 🧡 by{' '}
+      <footer style={{ padding: '12px 32px', borderTop: `0.5px solid ${BORDER_COLOR}`, background: '#fff', textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
+        {'Made with 🧡 by '}
         <a href="https://www.linkedin.com/in/marek-nalikowski/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
           Marek Nalikowski
         </a>

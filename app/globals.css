@@ -22,3 +22,16 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+/* Mobile nav */
+@media (max-width: 640px) {
+  .nav-bunny-text { font-size: 10px !important; }
+  .nav-bunny-logo { height: 16px !important; }
+  .hero-headline { font-size: 32px !important; }
+  .hero-section { padding: 32px 20px 20px !important; }
+  .nav-bunny-badge {
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    gap: 2px !important;
+  }
+}

@@ -16,6 +16,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/drawn-logo.svg" type="image/svg+xml" />
+      </head>
       <body className={`${rubik.variable} antialiased`}>
         {children}
         <Analytics />
