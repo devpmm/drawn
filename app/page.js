@@ -43,40 +43,29 @@ export default function Home() {
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
   const panelRef = useRef(null);
+  const canvasRef = useRef(null);
 
-  // Scroll to top when any Excalidraw modal opens
+  // Scroll to top whenever any Excalidraw modal opens (container is inserted fresh each time)
   useEffect(() => {
     const observer = new MutationObserver((mutations) => {
       for (const mutation of mutations) {
-        if (mutation.addedNodes.length > 0) {
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-          break;
+        for (const node of mutation.addedNodes) {
+          if (node.nodeType === 1 && node.classList?.contains('excalidraw-modal-container')) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            return;
+          }
         }
       }
     });
-
-    const watch = () => {
-      const container = document.querySelector('.excalidraw-modal-container');
-      if (container) {
-        observer.observe(container, { childList: true });
-        return true;
-      }
-      return false;
-    };
-
-    if (!watch()) {
-      const domObserver = new MutationObserver(() => {
-        if (watch()) domObserver.disconnect();
-      });
-      domObserver.observe(document.body, { childList: true, subtree: true });
-      return () => { observer.disconnect(); domObserver.disconnect(); };
-    }
-
+    observer.observe(document.body, { childList: true, subtree: true });
     return () => observer.disconnect();
   }, []);
 
-  // Sync inputs panel width to Excalidraw toolbar width once it renders
+  // Sync inputs panel width to Excalidraw toolbar width once it renders,
+  // and attach a click listener to the hamburger menu trigger to scroll to canvas
   useEffect(() => {
+    let menuTriggerListener = null;
+
     const measure = () => {
       // NOTE: '.App-toolbar' is an undocumented Excalidraw internal class — may change in future Excalidraw versions
       const toolbar = document.querySelector('.App-toolbar');
@@ -84,6 +73,19 @@ export default function Home() {
         const w = toolbar.getBoundingClientRect().width;
         if (w > 0) {
           setPanelWidth(Math.round(w));
+
+          // Attach hamburger click listener — scroll to canvas only if at top of page
+          const trigger = document.querySelector('.main-menu-trigger');
+          if (trigger && !trigger._scrollListenerAttached) {
+            menuTriggerListener = () => {
+              if (window.scrollY === 0) {
+                canvasRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            };
+            trigger.addEventListener('click', menuTriggerListener);
+            trigger._scrollListenerAttached = true;
+          }
+
           return true;
         }
       }
@@ -456,7 +458,7 @@ export default function Home() {
         )}
 
         {/* Excalidraw canvas */}
-        <div style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', overflow: 'visible', position: 'relative' }}>
+        <div ref={canvasRef} style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', overflow: 'visible', position: 'relative' }}>
           <ExcalidrawCanvas elements={elements} />
         </div>
 
