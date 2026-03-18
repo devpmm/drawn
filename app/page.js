@@ -323,7 +323,11 @@ export default function Home() {
         {/* Inputs panel */}
         <div
           ref={panelRef}
-          onFocusCapture={() => panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}
+          onFocusCapture={(e) => {
+            if (e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SELECT') {
+              panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }}
           style={{ width: inputWidth, maxWidth: '100%', background: '#fff', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}
         >
 
