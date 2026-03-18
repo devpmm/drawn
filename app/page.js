@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { CHART_TYPES } from '@/lib/constants';
+import { CHART_TYPES, BRAND_COLOR, BORDER_COLOR } from '@/lib/constants';
 import { optimizeExcalidrawCode } from '@/lib/optimizeArrows';
 import { repairJsonClosure } from '@/lib/json-repair';
+import CookieBanner from '@/components/CookieBanner';
+import CookieSettingsLink from '@/components/CookieSettingsLink';
 
 const ExcalidrawCanvas = dynamic(() => import('@/components/ExcalidrawCanvas'), {
   ssr: false,
@@ -19,8 +21,6 @@ const ExcalidrawCanvas = dynamic(() => import('@/components/ExcalidrawCanvas'), 
   ),
 });
 
-const BRAND_COLOR = '#FFA033';
-const BORDER_COLOR = '#e0ddd8';
 const ACCESS_PASSWORD = process.env.NEXT_PUBLIC_ACCESS_PASSWORD;
 
 export default function Home() {
@@ -440,7 +440,7 @@ export default function Home() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {isGenerating ? 'Drawing...' : 'Draw it →'}
+                {isGenerating ? 'Drawing...' : 'Draw it'}
               </button>
             </div>
 
@@ -456,7 +456,7 @@ export default function Home() {
         )}
 
         {/* Excalidraw canvas */}
-        <div style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', overflow: 'visible', position: 'relative' }}>
+        <div style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', overflow: 'visible', position: 'relative' }}>
           <ExcalidrawCanvas elements={elements} />
         </div>
 
@@ -481,8 +481,13 @@ export default function Home() {
           smart-excalidraw-next
         </a>
         {' by liujuntao123'}
+        {' · '}
+        <a href="/privacy" style={{ color: '#aaa', textDecoration: 'none' }}>Privacy Policy</a>
+        {' · '}
+        <CookieSettingsLink />
       </footer>
 
+      <CookieBanner onAccept={() => {}} onDecline={() => {}} />
     </div>
   );
 }
