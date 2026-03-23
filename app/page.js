@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { CHART_TYPES, BRAND_COLOR, BORDER_COLOR } from '@/lib/constants';
+import { CHART_TYPES, BRAND_COLOR, BORDER_COLOR, TEXT_MUTED } from '@/lib/constants';
 import { optimizeExcalidrawCode } from '@/lib/optimizeArrows';
 import { repairJsonClosure } from '@/lib/json-repair';
 import CookieBanner from '@/components/CookieBanner';
@@ -303,7 +303,7 @@ export default function Home() {
     <div style={{ background: '#f9f7f4', minHeight: '100vh', fontFamily: "var(--font-rubik), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: '#1a1a1a', display: 'flex', flexDirection: 'column' }}>
 
       {/* Nav */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: '#fff', borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: '#fdf2e4', borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <img src="/drawn-logo.svg" width="28" height="28" alt="" />
           <span style={{ fontSize: '24px', fontWeight: 500, letterSpacing: '-0.5px', color: '#1a1a1a' }}>Drawn</span>
@@ -478,6 +478,12 @@ export default function Home() {
           </div>
         )}
 
+        {/* Free tier info */}
+        <div style={{ fontSize: '12px', color: TEXT_MUTED, textAlign: 'center', padding: '6px 0' }}>
+          {'Free tier: 10 generations/hour · Want unlimited? '}
+          <a href="https://github.com/devpmm/drawn" target="_blank" rel="noopener noreferrer" style={{ color: TEXT_MUTED, textDecoration: 'underline' }}>Clone and self-host →</a>
+        </div>
+
         {/* Excalidraw canvas */}
         <div ref={canvasRef} style={{ width: '100%', height: 'calc(100vh - 160px)', minHeight: '320px', overflow: 'visible', position: 'relative' }}>
           <ExcalidrawCanvas elements={elements} />
@@ -486,7 +492,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer style={{ padding: '12px 32px', borderTop: `0.5px solid ${BORDER_COLOR}`, background: '#fff', textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
+      <footer style={{ padding: '12px 32px', borderTop: `0.5px solid ${BORDER_COLOR}`, background: '#fdf2e4', textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
         {'Made with 🧡 by '}
         <a href="https://www.linkedin.com/in/marek-nalikowski/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
           Marek Nalikowski
