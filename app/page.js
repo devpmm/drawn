@@ -39,6 +39,8 @@ export default function Home() {
   const [elements, setElements] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState(null);
+  const [elapsedSeconds, setElapsedSeconds] = useState(0);
+  const timerRef = useRef(null);
 
   const fileInputRef = useRef(null);
   const imageInputRef = useRef(null);
@@ -60,6 +62,16 @@ export default function Home() {
     observer.observe(document.body, { childList: true, subtree: true });
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if (isGenerating) {
+      setElapsedSeconds(0);
+      timerRef.current = setInterval(() => setElapsedSeconds(s => s + 1), 1000);
+    } else {
+      clearInterval(timerRef.current);
+    }
+    return () => clearInterval(timerRef.current);
+  }, [isGenerating]);
 
   // Sync inputs panel width to Excalidraw toolbar width once it renders,
   // and attach a click listener to the hamburger menu trigger to scroll to canvas
@@ -368,7 +380,10 @@ export default function Home() {
               <textarea
                 value={textInput}
                 onChange={e => setTextInput(e.target.value)}
-                onKeyDown={e => { if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) handleGenerate(); }}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) { handleGenerate(); return; }
+                  if (e.key === 'Enter' && !e.shiftKey && canGenerate) { e.preventDefault(); handleGenerate(); }
+                }}
                 placeholder="e.g. A flowchart showing how a user signs up, verifies their email, and completes onboarding..."
                 style={textareaStyle}
               />
@@ -446,7 +461,9 @@ export default function Home() {
                   whiteSpace: 'nowrap',
                 }}
               >
-                {isGenerating ? 'Drawing...' : 'Draw it'}
+                {isGenerating
+                  ? `Drawing... ${elapsedSeconds < 60 ? `${elapsedSeconds}s` : `${Math.floor(elapsedSeconds / 60)}m ${String(elapsedSeconds % 60).padStart(2, '0')}s`}`
+                  : 'Draw it'}
               </button>
             </div>
 
