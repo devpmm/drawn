@@ -209,6 +209,10 @@ export default function Home() {
       });
 
       if (!response.ok) {
+        if (response.status === 429) {
+          setError(<>You've reached the hourly generation limit. Want unlimited diagrams? <a href="https://github.com/devpmm/drawn" target="_blank" rel="noopener noreferrer" style={{ color: '#dc2626', textDecoration: 'underline' }}>Clone the repo on GitHub</a> and run Drawn locally with your own OpenAI key.</>);
+          return;
+        }
         let message = 'Failed to generate diagram';
         try {
           const data = await response.json();
@@ -373,12 +377,12 @@ export default function Home() {
             {activeTab === 'file' && (
               <>
                 <div onClick={() => fileInputRef.current?.click()} style={dropZoneStyle}>
-                  {fileName ? `📄 ${fileName}` : 'Click to upload a file (.txt, .md, .csv, .json, .py...)'}
+                  {fileName ? `📄 ${fileName}` : 'Click to upload a file (.txt, .md, .json, .py, .js, .ts, .rs, .css, .sh...)'}
                 </div>
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept=".txt,.md,.csv,.json,.xml,.html,.js,.ts,.jsx,.tsx,.py,.java,.go,.rb,.php,.sql,.yaml,.yml"
+                  accept=".txt,.md,.csv,.json,.xml,.html,.js,.ts,.jsx,.tsx,.py,.java,.go,.rb,.php,.sql,.yaml,.yml,.css,.scss,.sass,.less,.rs,.c,.cpp,.h,.swift,.kt,.sh,.bash,.zsh,.toml,.ini,.env,.vue,.svelte,.graphql,.gql,.tsv,.jsonl"
                   onChange={handleFileUpload}
                   style={{ display: 'none' }}
                 />
