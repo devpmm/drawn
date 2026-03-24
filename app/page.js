@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import { CHART_TYPES, BRAND_COLOR, BORDER_COLOR, TEXT_MUTED } from '@/lib/constants';
+import { CHART_TYPES, BRAND_COLOR, BORDER_COLOR, TEXT_MUTED, NAV_BG, PAGE_BG, SURFACE_BG } from '@/lib/constants';
 import { optimizeExcalidrawCode } from '@/lib/optimizeArrows';
 import { repairJsonClosure } from '@/lib/json-repair';
 import CookieBanner from '@/components/CookieBanner';
@@ -300,10 +300,10 @@ export default function Home() {
   const inputWidth = `${panelWidth}px`;
 
   return (
-    <div style={{ background: '#f9f7f4', minHeight: '100vh', fontFamily: "var(--font-rubik), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: '#1a1a1a', display: 'flex', flexDirection: 'column' }}>
+    <div style={{ background: PAGE_BG, minHeight: '100vh', fontFamily: "var(--font-rubik), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: '#1a1a1a', display: 'flex', flexDirection: 'column' }}>
 
       {/* Nav */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: '#fdf2e4', borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: NAV_BG, borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           <img src="/drawn-logo.svg" width="28" height="28" alt="" />
           <span style={{ fontSize: '24px', fontWeight: 500, letterSpacing: '-0.5px', color: '#1a1a1a' }}>Drawn</span>
@@ -346,7 +346,7 @@ export default function Home() {
               panelRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
           }}
-          style={{ width: inputWidth, maxWidth: '100%', background: '#fff', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}
+          style={{ width: inputWidth, maxWidth: '100%', background: SURFACE_BG, border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}
         >
 
           {/* Tabs */}
@@ -492,7 +492,7 @@ export default function Home() {
       </div>
 
       {/* Footer */}
-      <footer style={{ padding: '12px 32px', borderTop: `0.5px solid ${BORDER_COLOR}`, background: '#fdf2e4', textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
+      <footer style={{ padding: '12px 32px', borderTop: `0.5px solid ${BORDER_COLOR}`, background: NAV_BG, textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
         {'Made with 🧡 by '}
         <a href="https://www.linkedin.com/in/marek-nalikowski/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
           Marek Nalikowski

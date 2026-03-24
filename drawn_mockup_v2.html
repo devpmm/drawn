@@ -1,0 +1,104 @@
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.page{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f9f7f4;color:#1a1a1a}
+.nav{display:flex;justify-content:space-between;align-items:center;padding:14px 32px;background:#fff;border-bottom:0.5px solid #e0ddd8}
+.logo{font-size:18px;font-weight:500;letter-spacing:-0.5px}
+.logo em{font-style:normal;color:#D85A30}
+.api-btn{font-size:12px;padding:5px 12px;border:0.5px solid #ccc;border-radius:6px;background:transparent;cursor:pointer;color:#1a1a1a}
+.hero{padding:56px 32px 16px;text-align:center}
+.headline{font-size:38px;font-weight:500;line-height:1.15;letter-spacing:-1.5px;margin-bottom:10px}
+.headline em{font-style:normal;color:#D85A30}
+.sub{font-size:15px;color:#666;margin-bottom:14px}
+.api-hint{text-align:center;font-size:13px;color:#888;padding-bottom:28px}
+.api-hint a{color:#D85A30;text-decoration:none;font-weight:500}
+.app-section{display:flex;flex-direction:column;align-items:center;gap:14px;padding:0 24px}
+.inputs-panel{width:360px;max-width:100%;background:#fff;border:0.5px solid #e0ddd8;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.panel-tabs{display:flex;padding:0 10px;border-bottom:0.5px solid #e0ddd8}
+.tab{padding:9px 12px;font-size:13px;color:#888;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-0.5px}
+.tab.active{color:#1a1a1a;font-weight:500;border-bottom:2px solid #D85A30}
+.panel-body{padding:10px 12px 12px;display:flex;flex-direction:column;gap:8px}
+textarea{width:100%;height:72px;font-size:12px;padding:8px 10px;border:0.5px solid #e0ddd8;border-radius:6px;resize:none;background:#fafafa;color:#1a1a1a;font-family:inherit;line-height:1.5}
+.bottom-row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.left-controls{display:flex;align-items:center;gap:6px}
+.chart-label{font-size:12px;color:#888;white-space:nowrap}
+select{font-size:12px;padding:4px 6px;border:0.5px solid #e0ddd8;border-radius:5px;background:#f9f7f4;color:#1a1a1a;width:100px}
+.draw-btn{padding:7px 14px;background:#D85A30;color:#fff;border:none;border-radius:6px;font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap}
+.canvas-wrap{width:100%}
+.canvas-shell{width:100%;height:380px;background:#fafafa;border:0.5px solid #e0ddd8;border-radius:10px;overflow:hidden;position:relative}
+.canvas-bg{position:absolute;inset:0;background-image:radial-gradient(circle,#d8d5d0 1px,transparent 1px);background-size:20px 20px}
+.excalidraw-toolbar-mock{position:absolute;top:12px;left:50%;transform:translateX(-50%);background:white;border:0.5px solid #e0ddd8;border-radius:8px;padding:6px 10px;display:flex;gap:7px;align-items:center;box-shadow:0 1px 4px rgba(0,0,0,0.06);white-space:nowrap}
+.ti{width:19px;height:19px;border-radius:3px;background:#f0ede8;display:flex;align-items:center;justify-content:center;font-size:9px;color:#888;flex-shrink:0}
+.ti.active{background:#e8e4ff;color:#5b4fcf}
+.canvas-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;white-space:nowrap}
+.canvas-label strong{display:block;font-size:13px;font-weight:400;color:#bbb;margin-bottom:4px}
+.canvas-label span{font-size:12px;color:#ccc}
+.zoom-mock{position:absolute;bottom:12px;left:12px}
+.zoom-ctrl{background:white;border:0.5px solid #e0ddd8;border-radius:6px;padding:4px 8px;font-size:11px;color:#888}
+footer{padding:12px 32px;border-top:0.5px solid #e0ddd8;background:#fff;display:flex;justify-content:space-between;font-size:11px;color:#aaa;margin-top:16px}
+footer a{color:#aaa;text-decoration:none}
+</style>
+
+<div class="page">
+  <nav class="nav">
+    <div class="logo">Dr<em>a</em>wn</div>
+    <button class="api-btn">+ Add API key</button>
+  </nav>
+
+  <div class="hero">
+    <div class="headline">Turn <em>anything</em> into editable<br>Excalidraw diagrams</div>
+    <div class="sub">Describe it, upload a file, or drop an image — get a diagram you can edit.</div>
+    <div class="api-hint">No API key yet? <a href="#">Get one in 2 minutes →</a></div>
+  </div>
+
+  <div class="app-section">
+    <div class="inputs-panel">
+      <div class="panel-tabs">
+        <div class="tab active">Text</div>
+        <div class="tab">File</div>
+        <div class="tab">Image</div>
+      </div>
+      <div class="panel-body">
+        <textarea placeholder="e.g. A flowchart showing how a user signs up, verifies their email, and completes onboarding..."></textarea>
+        <div class="bottom-row">
+          <div class="left-controls">
+            <span class="chart-label">Chart type:</span>
+            <select><option>Auto</option><option>Flowchart</option><option>Mind map</option><option>Org chart</option></select>
+          </div>
+          <button class="draw-btn">Draw it →</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="canvas-wrap">
+      <div class="canvas-shell">
+        <div class="canvas-bg"></div>
+        <div class="excalidraw-toolbar-mock">
+          <div class="ti">☰</div>
+          <div class="ti">✋</div>
+          <div class="ti active">↖</div>
+          <div class="ti">□</div>
+          <div class="ti">◇</div>
+          <div class="ti">○</div>
+          <div class="ti">→</div>
+          <div class="ti">—</div>
+          <div class="ti">✏</div>
+          <div class="ti">A</div>
+          <div class="ti">🖼</div>
+          <div class="ti">◻</div>
+        </div>
+        <div class="canvas-label">
+          <strong>Your diagram appears here</strong>
+          <span>Powered by Excalidraw — fully editable</span>
+        </div>
+        <div class="zoom-mock">
+          <div class="zoom-ctrl">− 100% +</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Drawn v1.0 · Built on <a href="#">Bunny.net</a></span>
+    <span>Based on <a href="#">smart-excalidraw-next</a> by liujuntao123</span>
+  </footer>
+</div>

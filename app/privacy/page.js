@@ -2,7 +2,7 @@ import { readFile } from 'fs/promises';
 import path from 'path';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { BORDER_COLOR, PAGE_BG, SURFACE_BG, FONT_STACK } from '@/lib/constants';
+import { BORDER_COLOR, PAGE_BG, SURFACE_BG, NAV_BG, FONT_STACK } from '@/lib/constants';
 
 export const metadata = {
   title: 'Privacy Policy — Drawn',
@@ -16,7 +16,7 @@ export default async function PrivacyPage() {
     <div style={{ background: PAGE_BG, minHeight: '100vh', fontFamily: FONT_STACK, color: '#1a1a1a' }}>
 
       {/* Nav */}
-      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: '#fff', borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
+      <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 32px', background: NAV_BG, borderBottom: `0.5px solid ${BORDER_COLOR}` }}>
         <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
           <img src="/drawn-logo.svg" width="28" height="28" alt="" />
           <span style={{ fontSize: '24px', fontWeight: 500, letterSpacing: '-0.5px', color: '#1a1a1a' }}>Drawn</span>
@@ -38,7 +38,7 @@ export default async function PrivacyPage() {
 
       {/* Content */}
       <main style={{ maxWidth: '680px', margin: '32px auto', padding: '0 24px 48px' }}>
-        <div style={{ background: '#fff', border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', padding: '40px 48px' }}>
+        <div style={{ background: SURFACE_BG, border: `0.5px solid ${BORDER_COLOR}`, borderRadius: '10px', padding: '40px 48px' }}>
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             components={{
@@ -53,6 +53,12 @@ export default async function PrivacyPage() {
               ),
               p: ({ children }) => (
                 <p style={{ fontSize: '13px', lineHeight: 1.7, color: '#444', margin: '0 0 10px' }}>{children}</p>
+              ),
+              ul: ({ children }) => (
+                <ul style={{ listStyle: 'disc', paddingLeft: '20px', margin: '0 0 10px' }}>{children}</ul>
+              ),
+              ol: ({ children }) => (
+                <ol style={{ listStyle: 'decimal', paddingLeft: '20px', margin: '0 0 10px' }}>{children}</ol>
               ),
               li: ({ children }) => (
                 <li style={{ fontSize: '13px', lineHeight: 1.7, color: '#444' }}>{children}</li>
@@ -86,7 +92,7 @@ export default async function PrivacyPage() {
       </main>
 
       {/* Footer */}
-      <footer style={{ padding: '12px 32px', borderTop: `0.5px solid ${BORDER_COLOR}`, background: '#fff', textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
+      <footer style={{ padding: '12px 32px', borderTop: `0.5px solid ${BORDER_COLOR}`, background: NAV_BG, textAlign: 'center', fontSize: '11px', color: '#aaa', marginTop: '16px' }}>
         {'Made with 🧡 by '}
         <a href="https://www.linkedin.com/in/marek-nalikowski/" target="_blank" rel="noopener noreferrer" style={{ color: '#aaa' }}>
           Marek Nalikowski

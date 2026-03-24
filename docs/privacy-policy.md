@@ -27,10 +27,10 @@ With your consent, I use **PostHog** to collect anonymised analytics data and se
 - Browser type, device type, and approximate location (country/region level)
 - A session recording of your on-screen activity within drawn.dev
 
-This data helps me understand how people use Drawn and improve the experience. It does not include the content of your diagrams or submitted inputs.
+This data helps me understand how people use Drawn and improve the experience.
 
 ### c) Technical data
-My hosting infrastructure (Bunny.net) may process your IP address and standard HTTP request data as a technical necessity of serving the application. This is not used for profiling or marketing.
+My hosting infrastructure (bunny.net) may process your IP address and standard HTTP request data as a technical necessity of serving the application. This is not used for profiling or marketing.
 
 ---
 
@@ -64,7 +64,7 @@ I share data with the following trusted third parties, each bound by a Data Proc
 |---|---|---|---|
 | **OpenAI** | AI diagram generation | USA (SCCs apply) | [openai.com/policies/privacy](https://openai.com/policies/privacy) |
 | **PostHog** | Analytics & session replay | EU / USA | [posthog.com/privacy](https://posthog.com/privacy) |
-| **Bunny.net** | Hosting & content delivery | EU | [bunny.net/privacy](https://bunny.net/privacy) |
+| **bunny.net** | Hosting & content delivery | EU | [bunny.net/privacy](https://bunny.net/privacy) |
 
 I do not sell your data to any third party.
 
@@ -80,7 +80,7 @@ OpenAI is based in the United States. Data transferred to OpenAI is protected by
 
 - **Submitted inputs:** Not stored by me. Retained by OpenAI for up to 30 days per their API data policy.
 - **Analytics data:** Retained by PostHog for up to 1 year, or until you withdraw consent.
-- **Infrastructure logs:** Retained by Bunny.net per their standard data retention policy.
+- **Infrastructure logs:** Retained by bunny.net per their standard data retention policy.
 
 ---
 
@@ -123,4 +123,4 @@ I may update this policy from time to time. The "Last updated" date at the top o
 
 ---
 
-*Drawn is a product by TUMULT Marek Nalikowski, operated independently and hosted on Bunny.net infrastructure.*
+*Drawn is a product by TUMULT Marek Nalikowski, operated independently and hosted on bunny.net infrastructure.*
