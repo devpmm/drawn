@@ -2,7 +2,7 @@
 
 **Turn anything into editable Excalidraw diagrams.**
 
-Drop in text, code, or images — get a diagram you can edit. Powered by GPT-5.4 and deployed on [Bunny.net](https://bunny.net).
+Drop in text, code, or images — get a diagram you can edit. Powered by GPT-5.4 and deployed on [bunny.net](https://bunny.net).
 
 👉 **[Try it at drawn.dev](https://drawn.dev)**
 
@@ -16,7 +16,7 @@ Drawn converts natural language descriptions, code files, and images into fully 
 
 ## Changes from the fork
 
-This project is a significant fork of [smart-excalidraw-next](https://github.com/liujuntao123/smart-excalidraw-next) by liujuntao123. Key changes:
+This project is a fork of [smart-excalidraw-next](https://github.com/liujuntao123/smart-excalidraw-next) by liujuntao123. Key changes:
 
 **UI/UX:**
 - Complete redesign — centered hero layout replacing the original sidebar
@@ -26,6 +26,7 @@ This project is a significant fork of [smart-excalidraw-next](https://github.com
 - Full codebase rewrite from Chinese to English
 - Simplified access control to server-side env var
 - Extended file format support (`.css`, `.scss`, `.rs`, `.c`, `.cpp`, `.swift`, `.kt`, `.sh`, `.bash`, `.toml`, `.vue`, `.svelte`, `.graphql`, `.jsonl` and more)
+- Upgraded Next.js to 16.0.11 (fixes critical RCE and DoS vulnerabilities present in the original repo)
 
 **Prompt engineering** (methodology informed by [excalidraw-diagram-skill](https://github.com/coleam00/excalidraw-diagram-skill) by coleam00):
 - Semantic color system — color encodes role (start, process, decision, end)
@@ -42,7 +43,7 @@ This project is a significant fork of [smart-excalidraw-next](https://github.com
 
 ## Demo infrastructure
 
-The live demo at [drawn.dev](https://drawn.dev) runs entirely on [Bunny.net](https://bunny.net):
+The live demo at [drawn.dev](https://drawn.dev) runs entirely on [bunny.net](https://bunny.net):
 
 - **Compute** — [Magic Containers](https://bunny.net/magic-containers) runs the Next.js app as a Docker container
 - **CDN & routing** — Pull Zone handles global traffic distribution and custom domain
