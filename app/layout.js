@@ -9,8 +9,20 @@ const rubik = Rubik({
 });
 
 export const metadata = {
-  title: "Drawn",
-  description: "Turn anything into editable Excalidraw diagrams",
+  title: "Drawn – Instant diagrams you can build on",
+  description: "Drop in text, code, or images — get an editable Excalidraw diagram in seconds. Powered by GPT-5.4, free to use, open source.",
+  openGraph: {
+    title: "Drawn – Instant diagrams you can build on",
+    description: "Drop in text, code, or images — get an editable Excalidraw diagram in seconds. Powered by GPT-5.4, free to use, open source.",
+    url: "https://drawn.dev",
+    images: [{ url: "/drawn-og.png" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Drawn – Instant diagrams you can build on",
+    description: "Drop in text, code, or images — get an editable Excalidraw diagram in seconds. Powered by GPT-5.4, free to use, open source.",
+    images: ["/drawn-og.png"],
+  },
 };
 
 export default function RootLayout({ children }) {
