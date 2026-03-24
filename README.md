@@ -51,6 +51,29 @@ The live demo at [drawn.dev](https://drawn.dev) runs entirely on [bunny.net](htt
 
 ---
 
+## Docker
+
+Build the image (pass your access password as a build argument):
+```bash
+docker build --platform linux/amd64 \
+  --build-arg NEXT_PUBLIC_ACCESS_PASSWORD=your_password_here \
+  -t drawn .
+```
+
+Run the container:
+```bash
+docker run -p 3000:3000 \
+  -e ACCESS_PASSWORD=your_password_here \
+  -e NEXT_PUBLIC_ACCESS_PASSWORD=your_password_here \
+  -e SERVER_LLM_API_KEY=your_openai_key \
+  -e SERVER_LLM_BASE_URL=https://api.openai.com/v1 \
+  -e SERVER_LLM_TYPE=openai \
+  -e SERVER_LLM_MODEL=gpt-5.4 \
+  drawn
+```
+
+---
+
 ## Self-hosting
 ```bash
 git clone https://github.com/devpmm/drawn
