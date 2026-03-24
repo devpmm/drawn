@@ -9,6 +9,7 @@ const rubik = Rubik({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://drawn.dev'),
   title: "Drawn – Instant diagrams you can build on",
   description: "Drop in text, code, or images — get an editable Excalidraw diagram in seconds. Powered by GPT-5.4, free to use, open source.",
   openGraph: {

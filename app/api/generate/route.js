@@ -21,7 +21,13 @@ export async function POST(request) {
           { status: 400 }
         );
       }
-      if (accessPassword !== envPassword) {
+      const { timingSafeEqual } = await import('crypto');
+      const envPasswordBuf = Buffer.from(envPassword);
+      const accessPasswordBuf = Buffer.from(accessPassword);
+      const passwordsMatch =
+        envPasswordBuf.length === accessPasswordBuf.length &&
+        timingSafeEqual(envPasswordBuf, accessPasswordBuf);
+      if (!passwordsMatch) {
         return NextResponse.json(
           { error: 'Incorrect access password' },
           { status: 401 }
