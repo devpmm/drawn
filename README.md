@@ -1,8 +1,8 @@
 # Drawn
 
-> Turn anything into editable Excalidraw diagrams.
+### Turn anything into editable Excalidraw diagrams.
 
-Drop in text, code, or images — get a diagram you can edit. Powered by GPT-5.4 and deployed on [bunny.net](https://bunny.net).
+Drop in text, code, or images — get a diagram you can edit. Powered by GPT-5.4 and deployed on [bunny.net](https://bunny.net/?ref=drawn).
 
 👉 **[Try it at drawn.dev](https://drawn.dev)**
 
