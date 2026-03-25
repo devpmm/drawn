@@ -16,6 +16,12 @@ COPY . .
 ARG NEXT_PUBLIC_ACCESS_PASSWORD
 ENV NEXT_PUBLIC_ACCESS_PASSWORD=$NEXT_PUBLIC_ACCESS_PASSWORD
 
+ARG NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN
+ENV NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN=$NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN
+
+ARG NEXT_PUBLIC_POSTHOG_HOST
+ENV NEXT_PUBLIC_POSTHOG_HOST=$NEXT_PUBLIC_POSTHOG_HOST
+
 RUN pnpm run build
 
 # ── Stage 3: runner ──────────────────────────────────────────────────────────

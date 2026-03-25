@@ -35,5 +35,7 @@ jobs:
           tags: ghcr.io/devpmm/drawn:latest
           build-args: |
             NEXT_PUBLIC_ACCESS_PASSWORD=${{ secrets.NEXT_PUBLIC_ACCESS_PASSWORD }}
+            NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN=${{ secrets.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN }}
+            NEXT_PUBLIC_POSTHOG_HOST=${{ secrets.NEXT_PUBLIC_POSTHOG_HOST }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
