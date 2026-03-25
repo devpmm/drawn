@@ -1,6 +1,6 @@
 # Drawn
 
-**Turn anything into editable Excalidraw diagrams.**
+> Turn anything into editable Excalidraw diagrams.
 
 Drop in text, code, or images — get a diagram you can edit. Powered by GPT-5.4 and deployed on [bunny.net](https://bunny.net).
 
@@ -43,11 +43,11 @@ This project is a fork of [smart-excalidraw-next](https://github.com/liujuntao12
 
 ## Demo infrastructure
 
-The live demo at [drawn.dev](https://drawn.dev) runs entirely on [bunny.net](https://bunny.net):
+The live demo at [drawn.dev](https://drawn.dev) runs entirely on [bunny.net](https://bunny.net/?ref=drawn):
 
-- **Compute** — [Magic Containers](https://bunny.net/magic-containers) runs the Next.js app as a Docker container
-- **CDN & routing** — Pull Zone handles global traffic distribution and custom domain
-- **Security & rate limiting** — [Bunny Shield](https://bunny.net/shield) enforces the free tier limit on `/api/generate`
+- **Compute** — [Magic Containers](https://docs.bunny.net/magic-containers/?ref=drawn) runs the Next.js app as a Docker container
+- **CDN & routing** — [Bunny CDN](https://docs.bunny.net/cdn/?ref=drawn) handles global traffic distribution and custom domain routing
+- **Security & rate limiting** — [Bunny Shield](https://docs.bunny.net/shield/?ref=drawn) enforces the free tier limit on `/api/generate`
 
 ---
 
