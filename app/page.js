@@ -502,7 +502,7 @@ export default function Home() {
             posthog.init(key, {
               api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
               person_profiles: 'identified_only',
-              session_recording: { maskAllInputs: true },
+              session_recording: { maskAllInputs: false },
             });
           }
         }}

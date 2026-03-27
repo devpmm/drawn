@@ -25,7 +25,8 @@ When you use Drawn to generate a diagram, you may submit text, files, or images.
 With your consent, I use **PostHog** to collect anonymised analytics data and session recordings. This may include:
 - Pages visited and interactions within the app
 - Browser type, device type, and approximate location (country/region level)
-- A session recording of your on-screen activity within drawn.dev
+- A session recording of your on-screen activity within drawn.dev, including text typed into the prompt field
+- Uploaded files and generated diagrams are not captured
 
 This data helps me understand how people use Drawn and improve the experience.
 
