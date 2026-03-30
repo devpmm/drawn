@@ -51,7 +51,11 @@ The live demo at [drawn.dev](https://drawn.dev) runs entirely on [bunny.net](htt
 
 ---
 
-## Docker
+## Self-hosting
+
+> Both options require you to set `NEXT_PUBLIC_ACCESS_PASSWORD` and `ACCESS_PASSWORD` to the same value.
+
+### Docker
 
 Build the image (pass your access password as a build argument):
 ```bash
@@ -64,7 +68,6 @@ Run the container:
 ```bash
 docker run -p 3000:3000 \
   -e ACCESS_PASSWORD=your_password_here \
-  -e NEXT_PUBLIC_ACCESS_PASSWORD=your_password_here \
   -e SERVER_LLM_API_KEY=your_openai_key \
   -e SERVER_LLM_BASE_URL=https://api.openai.com/v1 \
   -e SERVER_LLM_TYPE=openai \
@@ -72,9 +75,9 @@ docker run -p 3000:3000 \
   drawn
 ```
 
----
+> To deploy to a server instead of running locally, adjust the port mapping and set up a reverse proxy (e.g. nginx or Caddy) in front of it.
 
-## Self-hosting
+### Node
 ```bash
 git clone https://github.com/devpmm/drawn
 cd drawn
@@ -97,7 +100,7 @@ pnpm install
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open http://localhost:3000.
 
 ---
 
