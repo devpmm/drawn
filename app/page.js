@@ -25,6 +25,17 @@ const ExcalidrawCanvas = dynamic(() => import('@/components/ExcalidrawCanvas'), 
 
 const ACCESS_PASSWORD = process.env.NEXT_PUBLIC_ACCESS_PASSWORD;
 
+function initPostHog() {
+  const key = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
+  if (key && !posthog.__loaded) {
+    posthog.init(key, {
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      person_profiles: 'identified_only',
+      session_recording: { maskAllInputs: false },
+    });
+  }
+}
+
 export default function Home() {
   const [activeTab, setActiveTab] = useState('text');
   const [chartType, setChartType] = useState('auto');
@@ -48,6 +59,12 @@ export default function Home() {
   const imageInputRef = useRef(null);
   const panelRef = useRef(null);
   const canvasRef = useRef(null);
+
+  useEffect(() => {
+    if (localStorage.getItem('drawn_cookie_consent') === 'accepted') {
+      initPostHog();
+    }
+  }, []);
 
   // Scroll to top whenever any Excalidraw modal opens (container is inserted fresh each time)
   useEffect(() => {
@@ -496,16 +513,7 @@ export default function Home() {
       <Footer />
 
       <CookieBanner
-        onAccept={() => {
-          const key = process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN;
-          if (key && !posthog.__loaded) {
-            posthog.init(key, {
-              api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-              person_profiles: 'identified_only',
-              session_recording: { maskAllInputs: false },
-            });
-          }
-        }}
+        onAccept={initPostHog}
         onDecline={() => {}}
       />
     </div>
